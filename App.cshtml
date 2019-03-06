@@ -14,5 +14,6 @@
     protected override async Task OnInitAsync()
     {
         await ActionCreators.LoadWeather(Store.Dispatch, Http);
+        Logger.LogDebug("App initialised");
     }
 }
