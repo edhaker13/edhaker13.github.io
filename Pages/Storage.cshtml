@@ -1,0 +1,70 @@
+@page "/storage"
+@inherits MyAppComponent
+
+<h1>Storage</h1>
+<p>Demonstrating that we can add and retrieve data to HTML5 Storage</p>
+
+<section>
+    <h3>Local storage</h3>
+    <p>Number of items: @LocalCount</p>
+    <fieldset class="form-row align-items-center">
+        <div class="col-auto">
+            <label class="sr-only" for="itemText">Item Text</label>
+            <textarea class="form-control" id="itemText" placeholder="Any value" bind="@LocalItem"></textarea>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" onclick=@SetItem>Set Item</button>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" onclick=@GetItem>Retrieve Item</button>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-danger" onclick="@RemoveItem">Remove Item</button>
+        </div>
+    </fieldset>
+</section>
+
+@functions {
+    int LocalCount {get;set;}
+    string LocalItem {get;set;}
+
+    async Task SetItem()
+    {
+        try
+        {
+            await LocalStorage.SetItem<string>("item", LocalItem);
+            LocalCount = await LocalStorage.Length();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex);
+        }
+    }
+
+    async Task GetItem()
+    {
+        try
+        {
+            LocalItem = await LocalStorage.GetItem<string>("item");
+            LocalCount = await LocalStorage.Length();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex);
+        }
+    }
+
+    async Task RemoveItem()
+    {
+        try
+        {
+            await LocalStorage.RemoveItem("item");
+            LocalCount = await LocalStorage.Length();
+            LocalItem = null;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex);
+        }
+    }
+}

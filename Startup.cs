@@ -1,4 +1,5 @@
 using Blazor.Extensions.Logging;
+using Blazor.Extensions.Storage;
 using BlazorRedux;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ namespace BlazorStandalone
         {
             services.AddLogging(builder => builder.AddBrowserConsole().SetMinimumLevel(LogLevel.Trace));
             services.AddReduxStore<MyState, IAction>(new MyState(), Reducers.RootReducer, options=>options.GetLocation=state=>state.Location);
+            services.AddStorage();
         }
 
         public void Configure(IComponentsApplicationBuilder app)
