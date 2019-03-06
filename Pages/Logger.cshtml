@@ -1,0 +1,19 @@
+@page "/logger"
+@inherits MyAppComponent
+
+<h1>Logger</h1>
+
+<p>Demonstrating that we can log to the browser console, press F12!</p>
+
+<label>Enter text to log:</label>
+<input class="input" type="text" bind="@Text" />
+<button class="btn btn primary" onclick=@LogText>Submit</button>
+
+@functions {
+    string Text {get;set;}
+    void LogText()
+    {
+        Logger.LogDebug(Text);
+        Text = "";
+    }
+}
